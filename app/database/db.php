@@ -16,7 +16,11 @@ function executeQuery($sql, $data)
     $values = array_values($data);
     $types = str_repeat('s', count($values));
     $stmt->bind_param($types, ...$values);
-    $stmt->execute();
+    $result = $stmt->execute();
+    
+    if(!$result) {
+        die("Failed to query database".$stmt->error);  
+    }
     return $stmt;
 }
 
@@ -78,10 +82,34 @@ function selectOne($table, $conditions)
     
 }
 
-$conditions = [
-    'admin' => 0,
-    'username' => 'macato',
+function create($table, $data) 
+{
+    global $conn;
+
+    $sql = "INSERT INTO $table SET ";
+
+    $i = 0;
+    foreach($data as $key => $value) {
+        if($i == 0) {
+            $sql = $sql . "  $key=?";
+        } else {
+            $sql = $sql . ", $key=?";
+        } 
+        $i++;          
+    }
+    
+    $stmt = executeQuery($sql, $data);
+    $id = $stmt->insert_id;
+    return $id;
+}
+
+$data = [
+    'username' => 'Mancebo',
+    'admin' => 1,
+    'email' => 'mancebo@email.com',
+    'password' => 'mancebo123'
+    
 ];
 
-$users = selectOne('users', $conditions);
-dd($users);
+$id = create('users', $data);
+dd($id);
