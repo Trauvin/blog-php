@@ -103,13 +103,16 @@ function create($table, $data)
     return $id;
 }
 
-$data = [
-    'username' => 'Mancebo',
-    'admin' => 1,
-    'email' => 'mancebo@email.com',
-    'password' => 'mancebo123'
-    
-];
+function delete($table, $id) 
+{
+    global $conn;
 
-$id = create('users', $data);
+    $sql = "DELETE FROM  $table WHERE id=?";
+
+    $stmt = executeQuery($sql, ['id' => $id]);
+    return $stmt->affected_rows;
+}
+
+
+$id = delete('users', 2);
 dd($id);
