@@ -21,10 +21,10 @@ include(ROOT_PATH) . '/app/database/db.php';
 
 <body>
 
-  <!-- header -->
   <?php include(ROOT_PATH . '/includes/header.php'); ?>
-  <!-- // header -->
-
+ 
+  <?php include(ROOT_PATH . '/includes/messages.php'); ?>
+  
   <!-- Page wrapper -->
   <div class="page-wrapper">
 

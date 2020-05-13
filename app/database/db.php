@@ -47,9 +47,7 @@ function selectAll($table, $conditions = [])
                 $sql = $sql . " AND $key=?";
             } 
             $i++;          
-        }
-        
-       
+        }  
 
         $stmt->executeQuery($sql, $conditions);
         $records = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
